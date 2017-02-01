@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ListController extends Controller {
 
+    /**
+     * @Route("/", name="welcome")
+     */
     public function showAction(Request $request) {
         $characters = [
             'Daenerys Targaryen' => 'Emilia Clarke',
