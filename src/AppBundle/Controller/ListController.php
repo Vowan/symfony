@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ListController extends Controller {
 
     /**
-     * @Route("/", name="welcome")
+     * @Route("/qqqqqq", name="welcome1")
      */
     public function showAction(Request $request) {
         $characters = [
