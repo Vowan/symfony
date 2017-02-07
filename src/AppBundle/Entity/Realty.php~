@@ -1,0 +1,243 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="realties")
+ */
+
+class Realty {
+    
+     /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     */
+    private $title;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     */
+    private $price;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank
+     */
+    
+    private $latitude;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank
+     */
+    private $longitude;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     */
+    
+    private $country;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     */
+    
+    private $region;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     */
+    
+    private $district;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     */
+    
+    private $street;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     */
+    
+    private $st_number;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Town", inversedBy="realties")
+     * @ORM\JoinColumn(name="town_id", referencedColumnName="id")
+     */
+    private $town;
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="realties")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $agent;
+    
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Realty
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set town
+     *
+     * @param \AppBundle\Entity\Town $town
+     *
+     * @return Realty
+     */
+    public function setTown(\AppBundle\Entity\Town $town = null)
+    {
+        $this->town = $town;
+
+        return $this;
+    }
+
+    /**
+     * Get town
+     *
+     * @return \AppBundle\Entity\Town
+     */
+    public function getTown()
+    {
+        return $this->town;
+    }
+
+    /**
+     * Set agent
+     *
+     * @param \AppBundle\Entity\User $agent
+     *
+     * @return Realty
+     */
+    public function setAgent(\AppBundle\Entity\User $agent = null)
+    {
+        $this->agent = $agent;
+
+        return $this;
+    }
+
+    /**
+     * Get agent
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getAgent()
+    {
+        return $this->agent;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Realty
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     *
+     * @return Realty
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+}

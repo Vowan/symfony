@@ -1,0 +1,10 @@
+#map {
+    height: 600px;
+    width: 100%; 
+}
+
+
+#controls {
+    position: relative;
+    width: 480px;
+}

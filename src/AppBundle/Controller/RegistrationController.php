@@ -32,6 +32,16 @@ class RegistrationController extends BaseController {
         $dispatcher = $this->get('event_dispatcher');
 
         $user = $userManager->createUser();
+        
+        $user->addRole('ROLE_REALTOR');
+        
+       // $user->setUsername('new');
+        
+       // $userManager->updateUser($user);
+        
+        //dump($user);        die();
+        
+        
         $user->setEnabled(true);
         
         $user->setUploadDir( $this->getParameter('upload_directory'));
