@@ -70,6 +70,8 @@ class RegistrationController extends BaseController {
             if ($form->isValid()) {
                 $event = new FormEvent($form, $request);
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+                
+                 $user->setUploadDir( $this->getParameter('upload_directory'). '/' . $this->getUsername() . '-' . md5($this->getEmail()));
 
                 $userManager->updateUser($user);
 

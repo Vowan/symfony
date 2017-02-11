@@ -30,23 +30,20 @@ class RealtyController extends Controller {
         // just setup a fresh $task object (remove the dummy data)
         $realty = new Realty();
 
-        // $qtype = 'AppBundle\Form\\'.$realty_type;
-        //dump($qtype);       die();
-
+ 
         $form = $this->createForm(RealtyFormType::class, $realty);
-//
-//      
-//
+        
+
         $form->handleRequest($request);
-//
+
         if ($form->isSubmitted() && $form->isValid()) {
 //            // $form->getData() holds the submitted values
 //            // but, the original `$task` variable has also been updated
             $task = $form->getData();
+            
+            dump($task);            die();
 
-            dump($task);
-            die();
-//
+          //
 //            // ... perform some action, such as saving the task to the database
 //            // for example, if Task is a Doctrine entity, save it!
 //            // $em = $this->getDoctrine()->getManager();
@@ -54,7 +51,9 @@ class RealtyController extends Controller {
 //            // $em->flush();
 //
 //            return $this->redirectToRoute('task_success');
-        }
+        } 
+        
+       
 
         return $this->render('realty/SellFlatType.html.twig', array('town' => $town,
                     'form' => $form->createView(),));

@@ -13,6 +13,12 @@
             <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
 
         {% endblock %}
+        
+         {% block jshead %}
+            <script src="{{ asset('js/jquery.js') }}"></script>
+            
+        {% endblock %}
+        
     </head>
 
     <body id="{% block body_id %}{% endblock %}">
@@ -35,7 +41,7 @@
         {% endblock %}
 
         {% block javascripts %}
-            <script src="{{ asset('js/jquery.js') }}"></script>
+            
             <script src="{{ asset('js/bootstrap.js') }}"></script>
             
             

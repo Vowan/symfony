@@ -1,0 +1,43 @@
+{# empty Twig template #}
+
+{% block realtymain_widget %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ form_label(form) }}</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.price) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.rooms) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form_row(form.sqTotal) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.sqLife) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.sqKitchen) }}
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4">
+                    {{ form_row(form.level) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.levels) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

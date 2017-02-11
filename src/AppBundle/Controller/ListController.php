@@ -11,6 +11,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+use AppBundle\Form\RealtyembedType;
+use AppBundle\Entity\Realtyembed;
+use AppBundle\Entity\Room;
+
+
 class ListController extends Controller {
 
     /**
@@ -49,7 +54,7 @@ class ListController extends Controller {
                     'form' => $form->createView(),
         ));
     }
-    
+
     /**
      * @Route("/tasktype", name="tasktype")
      */
@@ -59,7 +64,7 @@ class ListController extends Controller {
         $task->setTask('Write a blog post');
         $task->setDueDate(new \DateTime('tomorrow'));
 
-       $form = $this->createForm(TaskType::class);
+        $form = $this->createForm(TaskType::class);
 
 
         $form->handleRequest($request);
@@ -83,12 +88,42 @@ class ListController extends Controller {
         ));
     }
 
+    /**
+     * @Route("/formembed", name="formembed")
+     */
+    public function formembedAction(Request $request) {
+        $task = new Realtyembed();
+
+        // dummy code - this is here just so that the Task has some tags
+        // otherwise, this isn't an interesting example
+        $tag1 = new Room();
+        $tag1->setName('tag1');
+        $task->getRooms()->add($tag1);
+        $tag2 = new Room();
+        $tag2->setName('tag2');
+        $task->getRooms()->add($tag2);
+        // end dummy code
+
+        $form = $this->createForm(RealtyembedType::class, $task);
+        
+        
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // ... maybe do some form processing, like saving the Task and Tag objects
+        }
+
+        return $this->render('proba/form.html.twig', array(
+                    'form' => $form->createView(),
+        ));
+    }
 
     /**
      * @Route("/task/success", name="task_success")
      */
     public function successAction(Request $request) {
-        return $this->render('default/index.html.twig');
+        return $this->render('proba/form.html.twig');
     }
 
 }

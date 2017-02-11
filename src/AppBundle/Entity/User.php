@@ -17,25 +17,25 @@ use Doctrine\Common\Collections\ArrayCollection;
  * })
  */
 class User extends BaseUser {
-    
-    private  $uploadDir = null;
-    
+
+    private $uploadDir = null;
+
     public function setUploadDir($uploadDir) {
-        
+
         $this->uploadDir = $uploadDir;
-                
+
         return $this;
-        
     }
 
     /**
+     * @var int
+     *
      * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
-    
+
     /**
      * @var Comment[]|ArrayCollection
      *
@@ -46,28 +46,20 @@ class User extends BaseUser {
      * )
      * 
      */
-     
     private $realties;
-    
-    
+
     /**
      * Many Users have Many Groups.
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Town", inversedBy="agents")
      * @ORM\JoinTable(name="agents_towns")
      */
-    
     private $towns;
-    
-    
-
-    
-    
 
     public function __construct() {
         parent::__construct();
-        
-         $this->realties = new ArrayCollection();
-         $this->towns = new ArrayCollection();
+
+        $this->realties = new ArrayCollection();
+        $this->towns = new ArrayCollection();
     }
 
     /**
@@ -80,7 +72,7 @@ class User extends BaseUser {
     public function getPicture() {
         return $this->picture;
     }
-    
+
 //    Symfony\Component\HttpFoundation\File\UploadedFile object {
 //  test => (bool) false
 //  originalName => (string) coffee.jpg
@@ -92,30 +84,29 @@ class User extends BaseUser {
 //}
 
     public function setPicture($picture) {
-        
-        if(null == $picture){
-           $this->picture = '';
-           return $this;
+
+        if (null == $picture) {
+            $this->picture = '';
+            return $this;
         }
-        
-       // dump($this->uploadDir);        die();
-        
+
+        // dump($this->uploadDir);        die();
         // Generate a unique name for the file before saving it
-            $fileName = 'profile-picture'.'.'.$picture->guessExtension();
+        $fileName = 'profile-picture' . '.' . $picture->guessExtension();
 
-            // Move the file to the directory where brochures are stored
-            $picture->move(
-                $this->uploadDir.'/'.$this->getUsername().'-'.md5($this->getEmail()).'/',
-                    $fileName
-            );
+        // Move the file to the directory where brochures are stored
+        $picture->move(
+                $this->uploadDir . '/' . $this->getUsername() . '-' . md5($this->getEmail()) . '/', $fileName
+        );
 
-                               
+
+
+        $this->picture = $this->uploadDir . '/' . $this->getUsername() . '-' . md5($this->getEmail()) . '/' . $fileName;
+
+       $this->uploadDir = $this->uploadDir . '/' . $this->getUsername() . '-' . md5($this->getEmail());
         
-        $this->picture =$this->uploadDir.'/'.$this->getUsername().'-'.md5($this->getEmail()).'/'. $fileName;
-
         return $this;
     }
-
 
     /**
      * Add realty
@@ -124,8 +115,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function addRealty(\AppBundle\Entity\Realty $realty)
-    {
+    public function addRealty(\AppBundle\Entity\Realty $realty) {
         $this->realties[] = $realty;
 
         return $this;
@@ -136,8 +126,7 @@ class User extends BaseUser {
      *
      * @param \AppBundle\Entity\Realty $realty
      */
-    public function removeRealty(\AppBundle\Entity\Realty $realty)
-    {
+    public function removeRealty(\AppBundle\Entity\Realty $realty) {
         $this->realties->removeElement($realty);
     }
 
@@ -146,8 +135,7 @@ class User extends BaseUser {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRealties()
-    {
+    public function getRealties() {
         return $this->realties;
     }
 
@@ -158,8 +146,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function addTown(\AppBundle\Entity\Town $town)
-    {
+    public function addTown(\AppBundle\Entity\Town $town) {
         $this->towns[] = $town;
 
         return $this;
@@ -170,8 +157,7 @@ class User extends BaseUser {
      *
      * @param \AppBundle\Entity\Town $town
      */
-    public function removeTown(\AppBundle\Entity\Town $town)
-    {
+    public function removeTown(\AppBundle\Entity\Town $town) {
         $this->towns->removeElement($town);
     }
 
@@ -180,8 +166,8 @@ class User extends BaseUser {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTowns()
-    {
+    public function getTowns() {
         return $this->towns;
     }
+
 }

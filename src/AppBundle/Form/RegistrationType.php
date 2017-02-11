@@ -16,21 +16,18 @@ class RegistrationType extends AbstractType {
                 ->add('picture', FileType::class, array(
                     'label' => 'Profile picture (image file)',
                     'required' => false,
-                   
                     'empty_data' => null
                 ))
         // ...
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => Realty::class,
-        ]);
+    public function getParent() {
+        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
+    }
+
+    public function getName() {
+        return 'app_user_registration';
     }
 
 }

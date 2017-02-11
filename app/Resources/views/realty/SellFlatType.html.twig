@@ -1,9 +1,47 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form with ['form/address.html.twig', 
+'form/realtymain.html.twig', 'form/user.html.twig', 'form/room.html.twig']%}
+
 {% block stylesheets %}
     {{ parent() }}
 
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
+{% endblock %}
+
+{% block jshead  %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        // keep track of how many email fields have been rendered
+        var emailCount = '{{ form.rooms|length }}';
+
+        jQuery(document).ready(function () {
+            jQuery('#add-another-email').click(function (e) {
+                e.preventDefault();
+
+                var emailList = jQuery('#email-fields-list');
+
+                // grab the prototype template
+                var newWidget = emailList.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                
+                newWidget = newWidget.replace(/__name__label__/g, parseInt(emailCount+1)+'-комната');
+                newWidget = newWidget.replace(/__name__/g, emailCount);
+               
+                emailCount++;
+
+               
+                $(newWidget).appendTo(emailList);
+            });
+        })
+    </script>
+
+
 
 {% endblock %}
 
@@ -32,38 +70,28 @@
         </div>
         <div class="col-md-6">
             {{ form_start(form) }}
-            {{ form_row(form.latitude) }}
-            {{ form_row(form.longitude) }}
-            <div class="panel panel-default">
-                <div class="panel-heading">Адрес</div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ form_row(form.country) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(form.region) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ form_row(form.town) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(form.district) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ form_row(form.street) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(form.st_number) }}
-                        </div>
-                    </div>
-                </div>
+
+            {#{ form_row(form.rooms) }#}
+
+            {# store the prototype on the data-prototype attribute #}
+            <div id="email-fields-list"
+                data-prototype="{{ form_widget(form.rooms.vars.prototype)|e }}">
+                {% for emailField in form.rooms %}
+                    
+                        {{ form_errors(emailField) }}
+                        {{ form_widget(emailField) }}
+                    
+                {% endfor %}
             </div>
 
+            <a href="#" id="add-another-email">Add another email</a>
+
+
+            {{ form_row(form.address) }}
+
+            {{ form_row(form.user) }}
+
+            {{ form_row(form.realtymain) }}
 
 
             {{ form_end(form) }}
@@ -72,6 +100,8 @@
 
 
     </div>
+
+
 
 {% endblock %}
 

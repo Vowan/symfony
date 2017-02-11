@@ -1,0 +1,41 @@
+{# empty Twig template #}
+
+{% block address_widget %}
+
+    {{ form_row(form.latitude) }}
+    {{ form_row(form.longitude) }}
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ form_label(form) }}</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.country) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.region) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.town) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.district) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.street) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.st_number) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   
+
+
+{% endblock %}
