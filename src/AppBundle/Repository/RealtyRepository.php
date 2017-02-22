@@ -24,5 +24,24 @@ class RealtyRepository extends EntityRepository {
        
         return $query->getResult();
     }
+    
+     public function getRealtiesForJson($name, $region) {
+        
+     //   dump($name, $region);
+           
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT r.uuid, r.type, r.title,"
+                        . " r.latitude, r.longitude FROM AppBundle\Entity\Realty r "
+                        . "JOIN r.town t WHERE t.name = :name AND t.region = :region");
+                        
+        $query->setParameters(array(
+            'name' => $name,
+            'region' => $region,
+            
+        ));
+       
+        return $query->getResult();
+    }
+
 
 }

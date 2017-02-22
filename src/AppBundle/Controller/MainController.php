@@ -56,13 +56,13 @@ class MainController extends Controller {
 
          $repository = $this->getDoctrine()->getRepository('AppBundle:Realty');
 
-         $realties = $repository->getRealtiesByTownAndRegion($name, $region);
+         $realties = $repository->getRealtiesForJson($name, $region);
         
         
      //   dump("ajax", $realties);        die();
 
 
-       return $this->json(array('ответ' => $name));
+       return $this->json(array('realties' => $realties));
     }
 
     /**

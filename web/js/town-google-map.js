@@ -16,14 +16,16 @@ function initMap() {
     geocoder.geocode({'address': address}, function (results, status) {
         if (status === 'OK') {
             map.setCenter(results[0].geometry.location);
-            
-            console.log(ajaxUrl);
 
-            $.getJSON(ajaxUrl+'/'+town+'/'+region, function () {
-                console.log("success");
-            })
-                    .done(function () {
-                        console.log("second success");
+            $.getJSON(ajaxUrl + '/' + town + '/' + region)
+                    .done(function (data) {
+                        // console.log("second success", data);
+                        data.realties.forEach(function (el) {
+                            new google.maps.Marker({
+                                map: map,
+                                position: {lat: parseFloat(el['latitude']), lng: parseFloat(el['longitude'])}
+                            });
+                        });
                     })
                     .fail(function () {
                         console.log("error");
@@ -31,11 +33,6 @@ function initMap() {
                     .always(function () {
                         console.log("complete");
                     });
-
-//            var marker = new google.maps.Marker({
-//              map: map,
-//              position: results[0].geometry.location
-//            });
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
