@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="realties")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RealtyRepository")
  */
 class Realty {
 
@@ -18,6 +19,15 @@ class Realty {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     
+     */
+    protected $uuid;
 
     /**
      * @var string
@@ -25,7 +35,7 @@ class Realty {
      * @ORM\Column(type="string")
      
      */
-    private $title;
+    private $title = 'title';
 
     /**
      * @var string
@@ -84,7 +94,7 @@ class Realty {
     private $st_number;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Town", inversedBy="realties")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Town", inversedBy="realties", cascade={"persist"})
      * @ORM\JoinColumn(name="town_id", referencedColumnName="id")
      */
     private $town;
@@ -581,4 +591,28 @@ class Realty {
         return $this->rooms;
     }
 
+
+    /**
+     * Set uuid
+     *
+     * @param string $uuid
+     *
+     * @return Realty
+     */
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * Get uuid
+     *
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
 }

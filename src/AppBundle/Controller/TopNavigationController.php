@@ -8,7 +8,7 @@ class TopNavigationController extends Controller
 {
     public function topNavigationAction()
     {
-        $nav_items = array('Kiev', 'Odecca');
+        $nav_items = array('Киев'=>'Киевская область', 'Одесса'=>'Одесская область');
 
         return $this->render(
             'navigation/top-nav.html.twig',

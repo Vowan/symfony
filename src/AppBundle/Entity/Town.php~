@@ -35,6 +35,14 @@ class Town {
      * @ORM\Column(type="string")
      */
     private $slug;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $region;
 
     /**
      * @var Comment[]|ArrayCollection

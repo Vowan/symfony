@@ -10,12 +10,13 @@ services:
 
     app.form.registration:
         class: AppBundle\Form\RegistrationType
+        arguments: ['%kernel.root_dir%', '%upload_directory%', '@app.filesystem']
         tags:
             - { name: form.type, alias: app_user_registration }
 
     app.form.type.task:
         class: AppBundle\Form\RealtyFormType
-        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+        arguments: ['@doctrine', '@security.token_storage', '%upload_directory%']
         tags:
             - { name: form.type }
             
@@ -24,3 +25,7 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
         tags:
             - { name: form.type }
+            
+    app.filesystem:
+        class: Symfony\Component\Filesystem\Filesystem
+    

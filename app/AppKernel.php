@@ -19,6 +19,8 @@ class AppKernel extends Kernel {
             new Blogger\BlogBundle\BloggerBlogBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new KHerGe\Bundle\UuidBundle\KHerGeUuidBundle(),
+          
             ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
+{% endblock %}
+
+{% block header %}
+
+
+    {{ render(controller(
+        'AppBundle:TopNavigation:topNavigation'
+    )) }}
+
+
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+            <div id="map"></div>
+        </div>
+        <div class="col-md-2">
+
+            {% if is_granted("ROLE_REALTOR") %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form  action="{{path('new_realty')}}" method="GET">
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" value="SellFlatType">Продам квартиру</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" value="flat_buy">Куплю квартиру</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" value="flat_rent_long">Сдам квартиру - длительно</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" value="flat_rent_short">Сдам квартиру - посуточно</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" value="house_sell">Продам дом</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" value="house_buy">Куплю дом</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" value="house_rent_long">Сдам дом - длительно</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" value="house_rent_short">Сдам дом - посуточно</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Разместить</button>
+                        </form> 
+                    </div>
+                </div>
+            {% else %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Для публикации на карте объявлений необходимо зарегистрироваться
+                    </div>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block js_google %}
+    
+    <script> var town = '{{town}}', region='{{region}}'</script>
+    
+    <script src="{{ asset('js/town-google-map.js') }}"></script>
+
+{% endblock %}  
+
+
+{% block js_bottom_base %}
+
+    
+
+    {{ parent() }}
+
+{% endblock %}
+

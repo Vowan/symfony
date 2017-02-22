@@ -35,17 +35,11 @@ class RegistrationController extends BaseController {
         
         $user->addRole('ROLE_REALTOR');
         
-       // $user->setUsername('new');
-        
-       // $userManager->updateUser($user);
-        
-        //dump($user);        die();
-        
+  
         
         $user->setEnabled(true);
         
-        $user->setUploadDir( $this->getParameter('upload_directory'));
-
+               
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
 
@@ -71,8 +65,7 @@ class RegistrationController extends BaseController {
                 $event = new FormEvent($form, $request);
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
                 
-                 $user->setUploadDir( $this->getParameter('upload_directory'). '/' . $this->getUsername() . '-' . md5($this->getEmail()));
-
+//dump($user);die();
                 $userManager->updateUser($user);
 
                 if (null === $response = $event->getResponse()) {

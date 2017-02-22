@@ -47,7 +47,7 @@ class UserType extends AbstractType {
                 ])
                 ->add('sername', TextType::class, [
                     'label' => 'фамилия',
-                  //  'data' => $user->sername,
+                    'data' => $user->getSername(),
                     'mapped' => false,
                 ])
                 ->add('email', EmailType::class, [
@@ -57,17 +57,17 @@ class UserType extends AbstractType {
                 ])
                 ->add('phone', TextType::class, [
                     'label' => 'телефон',
-                  //  'data' => $user->phone,
+                     'data' => $user->getPhone(),
                     'mapped' => false,
                 ])
                 ->add('skype', TextType::class, [
                     'label' => 'скайп',
-                  //  'data' => $user->skype,
+                   'data' => $user->getSkype(),
                     'mapped' => false,
                 ])
                 ->add('viber', TextType::class, [
                     'label' => 'вайбер',
-                   // 'data' => $user->viber,
+                    'data' => $user->getViber(),
                     'mapped' => false,
                 ])
         ;

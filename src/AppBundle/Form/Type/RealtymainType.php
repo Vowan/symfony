@@ -21,31 +21,37 @@ class RealtymainType extends AbstractType {
                 ->add('price', IntegerType::class, [
                     'label' => 'цена',
                     'attr' => ['data-id' => 'price'],
-                    'data' => '11',
+                    'data' => '1',
                 ])
                 ->add('rooms', IntegerType::class, [
                     'label' => 'л-во',
                     'attr' => ['data-id' => 'rooms'],
+                    'data' => '1',
                 ])
                 ->add('sqTotal', IntegerType::class, [
                     'label' => 'общая площадь',
                     'attr' => ['data-id' => 'sqTotal'],
+                    'data' => '1',
                 ])
                 ->add('sqLife', IntegerType::class, [
                     'label' => 'жилая площадь',
                     'attr' => ['data-id' => 'sqLife'],
+                    'data' => '1',
                 ])
                 ->add('sqKitchen', IntegerType::class, [
                     'label' => 'площадь кухни',
                     'attr' => ['data-id' => 'sqKitchen'],
+                    'data' => '1',
                 ])
                 ->add('level', IntegerType::class, [
                     'label' => 'этаж',
                     'attr' => ['data-id' => 'level'],
+                    'data' => '1',
                 ])
                  ->add('levels', IntegerType::class, [
                     'label' => 'этажность',
                     'attr' => ['data-id' => 'levels'],
+                     'data' => '1',
                 ])
 
             ;

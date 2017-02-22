@@ -27,6 +27,7 @@ class RoomType extends AbstractType {
                 )
                 ->add('room_sq', IntegerType::class, array(
                     'label' => 'площадь',
+                    'data' => '1',
                 ))
                 ->add('room_photo', FileType::class, array(
                     'label' => 'фото',

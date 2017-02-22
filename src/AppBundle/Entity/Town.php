@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="towns")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TownRepository")
  */
 class Town {
 
@@ -27,14 +28,21 @@ class Town {
      * @ORM\Column(type="string")
      * @Assert\NotBlank
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
-    private $slug;
+    private $slug = 'slug';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $region;
 
     /**
      * @var Comment[]|ArrayCollection
@@ -46,9 +54,7 @@ class Town {
      * )
      * 
      */
-     
     private $realties;
-
     // ...
     /**
      * Many Groups have Many Users.
@@ -62,14 +68,12 @@ class Town {
         $this->agents = new ArrayCollection();
     }
 
-
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -80,8 +84,7 @@ class Town {
      *
      * @return Town
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -92,8 +95,7 @@ class Town {
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -104,9 +106,11 @@ class Town {
      *
      * @return Town
      */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
+    public function setSlug($slug) {
+        if (null == $slug) {
+            $this->slug = strtolower($this->name);
+        } else
+            $this->slug = $slug;
 
         return $this;
     }
@@ -116,8 +120,7 @@ class Town {
      *
      * @return string
      */
-    public function getSlug()
-    {
+    public function getSlug() {
         return $this->slug;
     }
 
@@ -128,8 +131,7 @@ class Town {
      *
      * @return Town
      */
-    public function addRealty(\AppBundle\Entity\Realty $realty)
-    {
+    public function addRealty(\AppBundle\Entity\Realty $realty) {
         $this->realties[] = $realty;
 
         return $this;
@@ -140,8 +142,7 @@ class Town {
      *
      * @param \AppBundle\Entity\Realty $realty
      */
-    public function removeRealty(\AppBundle\Entity\Realty $realty)
-    {
+    public function removeRealty(\AppBundle\Entity\Realty $realty) {
         $this->realties->removeElement($realty);
     }
 
@@ -150,8 +151,7 @@ class Town {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRealties()
-    {
+    public function getRealties() {
         return $this->realties;
     }
 
@@ -162,8 +162,7 @@ class Town {
      *
      * @return Town
      */
-    public function addAgent(\AppBundle\Entity\User $agent)
-    {
+    public function addAgent(\AppBundle\Entity\User $agent) {
         $this->agents[] = $agent;
 
         return $this;
@@ -174,8 +173,7 @@ class Town {
      *
      * @param \AppBundle\Entity\User $agent
      */
-    public function removeAgent(\AppBundle\Entity\User $agent)
-    {
+    public function removeAgent(\AppBundle\Entity\User $agent) {
         $this->agents->removeElement($agent);
     }
 
@@ -184,8 +182,30 @@ class Town {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAgents()
-    {
+    public function getAgents() {
         return $this->agents;
     }
+
+    /**
+     * Set region
+     *
+     * @param string $region
+     *
+     * @return Town
+     */
+    public function setRegion($region) {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return string
+     */
+    public function getRegion() {
+        return $this->region;
+    }
+
 }

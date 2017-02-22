@@ -30,30 +30,36 @@ class RealtyController extends Controller {
         // just setup a fresh $task object (remove the dummy data)
         $realty = new Realty();
 
- 
+        $uuid_factory = $this->container->get('kherge_uuid.uuid_factory');
+
+        $uuid = $uuid_factory->uuid4()->toString();
+
+        $realty->setUuid($uuid);
+
         $form = $this->createForm(RealtyFormType::class, $realty);
-        
+
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            // $form->getData() holds the submitted values
-//            // but, the original `$task` variable has also been updated
-            $task = $form->getData();
-            
-            dump($task);            die();
+//  
+            $realty = $form->getData();
 
-          //
-//            // ... perform some action, such as saving the task to the database
-//            // for example, if Task is a Doctrine entity, save it!
-//            // $em = $this->getDoctrine()->getManager();
-//            // $em->persist($task);
-//            // $em->flush();
-//
-//            return $this->redirectToRoute('task_success');
-        } 
-        
-       
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($realty);
+
+            // actually executes the queries (i.e. the INSERT query)
+            $em->flush();
+            
+
+              return $this->redirectToRoute('town', array(
+                  'town' => $realty->getTown()->getName(),
+                  'region'=>$realty->getTown()->getRegion()
+                  ));
+        }
+
+
 
         return $this->render('realty/SellFlatType.html.twig', array('town' => $town,
                     'form' => $form->createView(),));

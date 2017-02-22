@@ -8,6 +8,8 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 /**
  * @ORM\Entity
@@ -18,15 +20,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class User extends BaseUser {
 
-    private $uploadDir = null;
-
-    public function setUploadDir($uploadDir) {
-
-        $this->uploadDir = $uploadDir;
-
-        return $this;
-    }
-
+    
     /**
      * @var int
      *
@@ -35,6 +29,34 @@ class User extends BaseUser {
      * @ORM\Column(type="integer")
      */
     protected $id;
+    
+     /**
+     * @ORM\Column(type="string")
+     *
+     * 
+     */
+    private $sername;
+    
+      /**
+     * @ORM\Column(type="string")
+     *
+     * 
+     */
+    private $phone;
+    
+      /**
+     * @ORM\Column(type="string")
+     *
+     * 
+     */
+    private $skype;
+    
+       /**
+     * @ORM\Column(type="string")
+     *
+     * 
+     */
+    private $viber;
 
     /**
      * @var Comment[]|ArrayCollection
@@ -73,38 +95,10 @@ class User extends BaseUser {
         return $this->picture;
     }
 
-//    Symfony\Component\HttpFoundation\File\UploadedFile object {
-//  test => (bool) false
-//  originalName => (string) coffee.jpg
-//  mimeType => (string) image/jpeg
-//  size => (int) 117713
-//  error => (int) 0
-//  *SplFileInfo*pathName => (string) /tmp/phpegdxlh
-//  *SplFileInfo*fileName => (string) phpegdxlh
-//}
-
     public function setPicture($picture) {
 
-        if (null == $picture) {
-            $this->picture = '';
-            return $this;
-        }
+        $this->picture = $picture;
 
-        // dump($this->uploadDir);        die();
-        // Generate a unique name for the file before saving it
-        $fileName = 'profile-picture' . '.' . $picture->guessExtension();
-
-        // Move the file to the directory where brochures are stored
-        $picture->move(
-                $this->uploadDir . '/' . $this->getUsername() . '-' . md5($this->getEmail()) . '/', $fileName
-        );
-
-
-
-        $this->picture = $this->uploadDir . '/' . $this->getUsername() . '-' . md5($this->getEmail()) . '/' . $fileName;
-
-       $this->uploadDir = $this->uploadDir . '/' . $this->getUsername() . '-' . md5($this->getEmail());
-        
         return $this;
     }
 
@@ -170,4 +164,100 @@ class User extends BaseUser {
         return $this->towns;
     }
 
+
+    /**
+     * Set sername
+     *
+     * @param string $sername
+     *
+     * @return User
+     */
+    public function setSername($sername)
+    {
+        $this->sername = $sername;
+
+        return $this;
+    }
+
+    /**
+     * Get sername
+     *
+     * @return string
+     */
+    public function getSername()
+    {
+        return $this->sername;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set skype
+     *
+     * @param string $skype
+     *
+     * @return User
+     */
+    public function setSkype($skype)
+    {
+        $this->skype = $skype;
+
+        return $this;
+    }
+
+    /**
+     * Get skype
+     *
+     * @return string
+     */
+    public function getSkype()
+    {
+        return $this->skype;
+    }
+
+    /**
+     * Set viber
+     *
+     * @param string $viber
+     *
+     * @return User
+     */
+    public function setViber($viber)
+    {
+        $this->viber = $viber;
+
+        return $this;
+    }
+
+    /**
+     * Get viber
+     *
+     * @return string
+     */
+    public function getViber()
+    {
+        return $this->viber;
+    }
 }

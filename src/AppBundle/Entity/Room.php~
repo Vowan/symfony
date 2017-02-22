@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="realties")
+ * @ORM\Table(name="rooms")
  */
 class Room {
 
@@ -44,10 +44,14 @@ class Room {
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank
+     * @ORM\Column(type="array")
+     * 
      */
     private $room_photo;
+    
+    public function __construct() {
+        $this->room_photo = array();
+    }
 
     /**
      * @ORM\ManyToOne(targetEntity="Realty", inversedBy="rooms")
@@ -102,29 +106,7 @@ class Room {
         return $this->room_sq;
     }
 
-    /**
-     * Set roomPhoto
-     *
-     * @param string $roomPhoto
-     *
-     * @return Room
-     */
-    public function setRoomPhoto($roomPhoto)
-    {
-        $this->room_photo = $roomPhoto;
-
-        return $this;
-    }
-
-    /**
-     * Get roomPhoto
-     *
-     * @return string
-     */
-    public function getRoomPhoto()
-    {
-        return $this->room_photo;
-    }
+   
 
     /**
      * Set realty
@@ -148,5 +130,38 @@ class Room {
     public function getRealty()
     {
         return $this->realty;
+    }
+
+  
+
+    /**
+     * Set roomPhoto
+     *
+     * @param array $roomPhoto
+     *
+     * @return Room
+     */
+    public function setRoomPhoto($roomPhoto)
+    {
+        $this->room_photo = $roomPhoto;
+
+        return $this;
+    }
+    
+    public function addRoomPhoto($roomPhoto)
+    {
+        $this->room_photo[] = $roomPhoto;
+
+        return $this;
+    }
+
+    /**
+     * Get roomPhoto
+     *
+     * @return array
+     */
+    public function getRoomPhoto()
+    {
+        return $this->room_photo;
     }
 }

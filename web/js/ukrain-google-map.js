@@ -1,7 +1,6 @@
+var autocomplete, marker;
 
-jQuery(document).ready(function ($) {
-
-    var autocomplete, marker;
+function initMap() {
 
     if ('Ukraine' == town) {
 
@@ -42,72 +41,74 @@ jQuery(document).ready(function ($) {
         // postal_code: 'short_name'
     };
 
+}
 
-    function fillInAddress() {
-        marker.setVisible(false);
+
+function fillInAddress() {
+    marker.setVisible(false);
 
 
 //console.log(autocomplete);
 
-        // Get the place details from the autocomplete object.
-        var place = autocomplete.getPlace();
+    // Get the place details from the autocomplete object.
+    var place = autocomplete.getPlace();
 
-        // If the place has a geometry, then present it on a map.
-        if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-        } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);
-        }
-        marker.setIcon(({
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-        }));
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
-        
-       
-        var latitude = place.geometry.location.lat();
-        var longitude = place.geometry.location.lng();
-
-        var form_elem_lat = $( "input[data-id='latitude']");
-        form_elem_lat.val(latitude);
-
-        var form_elem_lng = $( "input[data-id='longitude']");
-        form_elem_lng.val(longitude);
-
-
-
-        // Get each component of the address from the place details
-        // and fill the corresponding field on the form.
-
-       // var zag_address = document.getElementById('prop_address');
-
-       // zag_address.textContent = document.getElementById('autocomplete').value;
-
-
-        // console.log(document.getElementById('autocomplete').value);
-
-
-        for (var i = 0; i < place.address_components.length; i++) {
-            var addressType = place.address_components[i].types[0];
-
-            //console.log(place.geometry.location.lat());
-
-            if (componentForm[addressType]) {
-                var val = place.address_components[i][componentForm[addressType]];
-                var form_elem = $( "input[data-id='"+addressType+"']");
-                form_elem.val(val);
-                //console.log(form_elem);
-
-
-            }
-        }
-
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+    } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);
     }
+    marker.setIcon(({
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(35, 35)
+    }));
+    marker.setPosition(place.geometry.location);
+    marker.setVisible(true);
+
+
+    var latitude = place.geometry.location.lat();
+    var longitude = place.geometry.location.lng();
+
+    var form_elem_lat = $("input[data-id='latitude']");
+    form_elem_lat.val(latitude);
+
+    var form_elem_lng = $("input[data-id='longitude']");
+    form_elem_lng.val(longitude);
+
+
+
+    // Get each component of the address from the place details
+    // and fill the corresponding field on the form.
+
+    // var zag_address = document.getElementById('prop_address');
+
+    // zag_address.textContent = document.getElementById('autocomplete').value;
+
+
+    // console.log(document.getElementById('autocomplete').value);
+
+
+    for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+
+        //console.log(place.geometry.location.lat());
+
+        if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            var form_elem = $("input[data-id='" + addressType + "']");
+            form_elem.val(val);
+            //console.log(form_elem);
+
+
+        }
+    }
+
+}
 
 
 
@@ -177,6 +178,7 @@ jQuery(document).ready(function ($) {
 //
 
 
-});
+
+
 
 

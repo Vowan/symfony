@@ -12,23 +12,28 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use Doctrine\ORM\EntityManager;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use AppBundle\Form\Type\AddressType;
 use AppBundle\Form\Type\RealtymainType;
 use AppBundle\Form\Type\UserType;
 use AppBundle\Form\Type\RoomType;
 use AppBundle\Entity\Room;
+use AppBundle\Entity\Town;
 
 class RealtyFormType extends AbstractType {
 
-    private $em;
+    private $dr;
     private $ts;
     private $realtyType;
+    private $root;
 
-    public function __construct(EntityManager $em, TokenStorage $ts) {
-        $this->em = $em;
+    public function __construct(Registry $dr, TokenStorage $ts, $root) {
+        $this->dr = $dr;
         $this->ts = $ts;
+        $this->root = $root;
+
+        // dump($dr);        die();
     }
 
     public function getRealtyType() {
@@ -55,6 +60,8 @@ class RealtyFormType extends AbstractType {
 
     public function onPreSetData(FormEvent $event) {
         $form = $event->getForm();
+
+
 
         switch ($this->realtyType) {
 
@@ -90,26 +97,83 @@ class RealtyFormType extends AbstractType {
         $input = $event->getData();
         $form = $event->getForm();
         $user = $this->ts->getToken()->getUser();
-        
-       
 
-        dump($input, $user); die();
-        
-        if (array_key_exists('rooms', $input)) { // && is_array($input['rooms'])){
+        $user_upload_dir = explode('/', trim($user->getPicture(), '/'))[0] . '/' . $form->getData()->getUuid();
+
+
+   //     dump($input);        die();
+
+        $model = $form->getData();
+
+        if (array_key_exists('address', $input)) {
+
+            $model->setLatitude($input['address']['latitude']);
+            $model->setLongitude($input['address']['longitude']);
+            $model->setCountry($input['address']['country']);
+            $model->setRegion($input['address']['region']);
+
+            $repository = $this->dr->getRepository('AppBundle:Town');
+
+            $town = $repository->getTownByNameAndRegion($input['address']['town'], $input['address']['region']);
+
+             
+            if (!$town) {
+                $town = new Town();
+                $town->setName($input['address']['town']);
+                $town->setRegion($input['address']['region']);
+            }
+            
+            //dump( $town);          //  die();
+            $model->setTown($town);
+
+            $model->setDistrict($input['address']['district']);
+            $model->setStreet($input['address']['street']);
+            $model->setStNumber($input['address']['st_number']);
+        }
+
+        if (array_key_exists('realtymain', $input)) {
+
+            $model->setSqTotal($input['realtymain']['sqTotal']);
+            $model->setSqLife($input['realtymain']['sqLife']);
+            $model->setSqKitchen($input['realtymain']['sqKitchen']);
+            $model->setLevel($input['realtymain']['level']);
+            $model->setLevels($input['realtymain']['levels']);
+            $model->setPrice($input['realtymain']['price']);
+   //         $model->setPrice($input['realtymain']['price']);
+        }
+
+       
+        if (array_key_exists('rooms', $input)) {
+
             foreach ($input['rooms'] as $key => $value) {
 
+
                 $room = new Room();
-                $room->setName($input['rooms'][$key]['name']);
-                $room->setRoomSq($input['rooms'][$key]['room_sq']);
+                $room->setName($value['name']);
+                $room->setRoomSq($value['room_sq']);
                 $room->setRealty($form->getData());
                 $form->getData()->addRoom($room);
+
+                if (array_key_exists('room_photo', $value)) {
+                    foreach ($value['room_photo'] as $int => $photo) {
+
+                        $input_ext = $photo->getClientOriginalExtension();
+
+                        $photo->move($this->root . '/' . $user_upload_dir . '/', $value['name'] . '-' . $int . '.' . $input_ext);
+
+                        $room->addRoomPhoto('/' . $user_upload_dir . '/' . $value['name'] . '-' . $int . '.' . $input_ext);
+                        // dump($photo); 
+                    }
+                }
             }
         }
+        // die();
+       
         
-  
-//
-       dump($form->getData());
-//        //      die();
+      $model->setAgent($user);
+        
+        
+       //dump($form->getData());     die();
     }
 
 }

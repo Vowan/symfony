@@ -13,12 +13,12 @@
             <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
 
         {% endblock %}
-        
-         {% block jshead %}
+
+        {% block jshead %}
             <script src="{{ asset('js/jquery.js') }}"></script>
-            
+
         {% endblock %}
-        
+
     </head>
 
     <body id="{% block body_id %}{% endblock %}">
@@ -40,14 +40,18 @@
 
         {% endblock %}
 
-        {% block javascripts %}
-            
-            <script src="{{ asset('js/bootstrap.js') }}"></script>
-            
-            
+        {% block js_google %}
             <script src="{{ asset('js/ukrain-google-map.js') }}"></script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=	
-            AIzaSyDImhdEAxubprlL0piFqMerQ6WZAXN2Mu0&libraries=places&language=ru"></script>
+
+        {% endblock %}   
+
+        {% block js_bottom_base %}
+
+            <script src="{{ asset('js/bootstrap.js') }}"></script>
+
+
+            <script async defer  src="https://maps.googleapis.com/maps/api/js?key=	
+            AIzaSyDImhdEAxubprlL0piFqMerQ6WZAXN2Mu0&libraries=places&language=ru&callback=initMap"></script>
         {% endblock %}
 
         {# it's not mandatory to set the timezone in localizeddate(). This is done to
