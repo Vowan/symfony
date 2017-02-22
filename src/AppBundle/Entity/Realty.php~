@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="realties")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RealtyRepository")
  */
 class Realty {
 
@@ -27,6 +28,14 @@ class Realty {
      
      */
     protected $uuid;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     
+     */
+    protected $type;
 
     /**
      * @var string
@@ -34,7 +43,7 @@ class Realty {
      * @ORM\Column(type="string")
      
      */
-    private $title;
+    private $title = 'title';
 
     /**
      * @var string
@@ -93,7 +102,7 @@ class Realty {
     private $st_number;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Town", inversedBy="realties")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Town", inversedBy="realties", cascade={"persist"})
      * @ORM\JoinColumn(name="town_id", referencedColumnName="id")
      */
     private $town;

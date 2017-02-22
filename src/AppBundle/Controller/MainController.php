@@ -23,30 +23,46 @@ class MainController extends Controller {
     }
 
     /**
-     * @Route("/town/{town}/{region}", name="town")
+     * @Route("/town/{name}/{region}", name="town")
      */
-    public function townAction(Request $request, $town = 'Одеса', $region = 'Одеська область') {
+    public function townAction(Request $request, $name = 'Одеса', $region = 'Одеська область') {
 
       // dump($town,$region);       die();
 //        
 //        $user = $this->get('security.token_storage')->getToken()->getUser();
 //
-         $repository = $this->getDoctrine()->getRepository('AppBundle:Realty');
-//
-         $realties = $repository->getRealtiesByTownAndRegion($town, $region);
         
          $repository1 = $this->getDoctrine()->getRepository('AppBundle:Town');
          
-         $town= $repository1->find(2);
+         $town= $repository1->getTownByNameAndRegion($name, $region);
 
-        dump($realties);        die();
+       // dump($town);        die();
 
 
-        return $this->render('default/town.html.twig', array(
-                    'realties' => $realties,
-                    'town' => $town,
+        return $this->render('realty/town.html.twig', array(
+                    'town' => $name,
                     'region' => $region,
         ));
+    }
+    
+    /**
+     * @Route("/ajax/{name}/{region}", name="ajax")
+     */
+    public function ajaxAction(Request $request, $name = 'Одеса', $region = 'Одеська область') {
+
+
+       
+         $user = $this->get('security.token_storage')->getToken()->getUser();
+
+         $repository = $this->getDoctrine()->getRepository('AppBundle:Realty');
+
+         $realties = $repository->getRealtiesByTownAndRegion($name, $region);
+        
+        
+     //   dump("ajax", $realties);        die();
+
+
+       return $this->json(array('ответ' => $name));
     }
 
     /**
@@ -58,7 +74,7 @@ class MainController extends Controller {
 
         return $this->render('realty/town.html.twig', array(
                     'town' => 'Смотрич',
-                    'region' => 'Хмельницкая область',
+                    'region' => 'Хмельницька область',
         ));
     }
 

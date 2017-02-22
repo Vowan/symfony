@@ -28,6 +28,14 @@ class Realty {
      
      */
     protected $uuid;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     
+     */
+    protected $type;
 
     /**
      * @var string
@@ -614,5 +622,29 @@ class Realty {
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Realty
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

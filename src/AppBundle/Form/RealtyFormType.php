@@ -101,9 +101,11 @@ class RealtyFormType extends AbstractType {
         $user_upload_dir = explode('/', trim($user->getPicture(), '/'))[0] . '/' . $form->getData()->getUuid();
 
 
-   //     dump($input);        die();
+        //     dump($input);        die();
 
         $model = $form->getData();
+
+        $model->setType($this->realtyType);
 
         if (array_key_exists('address', $input)) {
 
@@ -116,13 +118,13 @@ class RealtyFormType extends AbstractType {
 
             $town = $repository->getTownByNameAndRegion($input['address']['town'], $input['address']['region']);
 
-             
+
             if (!$town) {
                 $town = new Town();
                 $town->setName($input['address']['town']);
                 $town->setRegion($input['address']['region']);
             }
-            
+
             //dump( $town);          //  die();
             $model->setTown($town);
 
@@ -139,10 +141,10 @@ class RealtyFormType extends AbstractType {
             $model->setLevel($input['realtymain']['level']);
             $model->setLevels($input['realtymain']['levels']);
             $model->setPrice($input['realtymain']['price']);
-   //         $model->setPrice($input['realtymain']['price']);
+            //         $model->setPrice($input['realtymain']['price']);
         }
 
-       
+
         if (array_key_exists('rooms', $input)) {
 
             foreach ($input['rooms'] as $key => $value) {
@@ -168,12 +170,12 @@ class RealtyFormType extends AbstractType {
             }
         }
         // die();
-       
-        
-      $model->setAgent($user);
-        
-        
-       //dump($form->getData());     die();
+
+
+        $model->setAgent($user);
+
+
+        //dump($form->getData());     die();
     }
 
 }

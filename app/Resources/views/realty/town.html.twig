@@ -80,7 +80,9 @@
 
 {% block js_google %}
     
-    <script> var town = '{{town}}', region='{{region}}'</script>
+    {{dump(town)}}
+    
+    <script> var town = '{{town}}', region='{{region}}', ajaxUrl="{{ path('ajax')}}"</script>
     
     <script src="{{ asset('js/town-google-map.js') }}"></script>
 
