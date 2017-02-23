@@ -30,7 +30,7 @@ class RealtyRepository extends EntityRepository {
      //   dump($name, $region);
            
         $query = $this->getEntityManager()
-                ->createQuery("SELECT r.uuid, r.type, r.title,"
+                ->createQuery("SELECT r.uuid, r.type, r.title, r.price,"
                         . " r.latitude, r.longitude FROM AppBundle\Entity\Realty r "
                         . "JOIN r.town t WHERE t.name = :name AND t.region = :region");
                         

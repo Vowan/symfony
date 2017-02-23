@@ -1,4 +1,6 @@
-var map
+var map;
+
+
 
 function initMap() {
 
@@ -21,10 +23,23 @@ function initMap() {
                     .done(function (data) {
                         // console.log("second success", data);
                         data.realties.forEach(function (el) {
-                            new google.maps.Marker({
+                            var mark = new google.maps.Marker({
                                 map: map,
-                                position: {lat: parseFloat(el['latitude']), lng: parseFloat(el['longitude'])}
+                                position: {lat: parseFloat(el['latitude']), lng: parseFloat(el['longitude'])},
+                                icon: marker + "orange.png",
                             });
+
+                            var infowindow = new google.maps.InfoWindow({
+                                maxWidth: 160
+                            });
+
+                            google.maps.event.addListener(mark, 'click', (function (marker) {
+                                return function () {
+                                    infowindow.setContent('<br>цена ' + el['price']  + '<br>'
+                                            + '<a href="'+data.realtyURL+'/'+el['uuid']+'">Подробнее</a>');
+                                    infowindow.open(map, marker);
+                                }
+                            })(mark));
                         });
                     })
                     .fail(function () {

@@ -1,4 +1,4 @@
-var autocomplete, marker;
+var autocomplete, marker, map, componentForm;
 
 function initMap() {
 
@@ -9,7 +9,7 @@ function initMap() {
         var zoom = 6;
     }
 
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         zoom: zoom,
         center: centr
     });
@@ -31,7 +31,7 @@ function initMap() {
         // position: myLatLng,
     });
 
-    var componentForm = {
+    componentForm = {
         street_number: 'short_name',
         route: 'long_name',
         sublocality_level_1: 'long_name',

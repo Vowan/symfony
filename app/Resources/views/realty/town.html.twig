@@ -82,7 +82,8 @@
     
     {{dump(town)}}
     
-    <script> var town = '{{town}}', region='{{region}}', ajaxUrl="{{ path('ajax')}}"</script>
+    <script> var town = '{{town}}', region='{{region}}',
+                ajaxUrl="{{ path('ajax')}}", marker="{{asset('img/')}}"</script>
     
     <script src="{{ asset('js/town-google-map.js') }}"></script>
 

@@ -35,6 +35,7 @@ class MainController extends Controller {
          $repository1 = $this->getDoctrine()->getRepository('AppBundle:Town');
          
          $town= $repository1->getTownByNameAndRegion($name, $region);
+         
 
        // dump($town);        die();
 
@@ -62,7 +63,18 @@ class MainController extends Controller {
      //   dump("ajax", $realties);        die();
 
 
-       return $this->json(array('realties' => $realties));
+       return $this->json(array('realties' => $realties,
+           "realtyURL" =>$this->generateUrl('realtyURL')));
+    }
+    
+    /**
+     * @Route("/single", name="realtyURL")
+     */
+    public function singleAction(Request $request) {
+
+
+
+        return $this->render('realty/single.html.twig');
     }
 
     /**
