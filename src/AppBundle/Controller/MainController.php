@@ -75,7 +75,7 @@ class MainController extends Controller {
 
         $realty = $repository->getRealtyByUUID($uuid);
 
-        dump("uuid", $realty);       die();
+     //   dump("uuid", $realty);       die();
 
         // check for "edit" access: calls all voters
 

@@ -20,7 +20,7 @@ class RealtorVoter extends Voter {
         }
 
         // only vote on Post objects inside this voter
-        if (!$subject instanceof Realty) {
+        if (!$subject[0] instanceof Realty) {
             return false;
         }
 
@@ -35,7 +35,7 @@ class RealtorVoter extends Voter {
             return false;
         }
 
-        return $user === $subject->getAgent();
+        return $user === $subject[0]->getAgent();
 
         throw new \LogicException('This code should not be reached!');
     }

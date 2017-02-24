@@ -28,4 +28,10 @@ services:
             
     app.filesystem:
         class: Symfony\Component\Filesystem\Filesystem
+        
+    app.realtor_voter:
+        class: AppBundle\Security\RealtorVoter
+        tags:
+            - { name: security.voter }
+       
     
