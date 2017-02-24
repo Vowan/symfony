@@ -27,17 +27,17 @@ class MainController extends Controller {
      */
     public function townAction(Request $request, $name = 'Одеса', $region = 'Одеська область') {
 
-      // dump($town,$region);       die();
+        // dump($town,$region);       die();
 //        
 //        $user = $this->get('security.token_storage')->getToken()->getUser();
 //
-        
-         $repository1 = $this->getDoctrine()->getRepository('AppBundle:Town');
-         
-         $town= $repository1->getTownByNameAndRegion($name, $region);
-         
 
-       // dump($town);        die();
+        $repository1 = $this->getDoctrine()->getRepository('AppBundle:Town');
+
+        $town = $repository1->getTownByNameAndRegion($name, $region);
+
+
+        // dump($town);        die();
 
 
         return $this->render('realty/town.html.twig', array(
@@ -45,36 +45,46 @@ class MainController extends Controller {
                     'region' => $region,
         ));
     }
-    
+
     /**
      * @Route("/ajax/{name}/{region}", name="ajax")
      */
     public function ajaxAction(Request $request, $name = 'Одеса', $region = 'Одеська область') {
 
 
-       
-         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-         $repository = $this->getDoctrine()->getRepository('AppBundle:Realty');
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
-         $realties = $repository->getRealtiesForJson($name, $region);
-        
-        
-     //   dump("ajax", $realties);        die();
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Realty');
+
+        $realties = $repository->getRealtiesForJson($name, $region);
+
+        $realtyURL = $this->generateUrl('realtyURL');
 
 
-       return $this->json(array('realties' => $realties,
-           "realtyURL" =>$this->generateUrl('realtyURL')));
+        return $this->json(array('realties' => $realties,
+                    "realtyURL" => $realtyURL));
     }
-    
+
     /**
-     * @Route("/single", name="realtyURL")
+     * @Route("/single/{uuid}", name="realtyURL")
      */
-    public function singleAction(Request $request) {
+    public function singleAction(Request $request, $uuid = 'aa') {
 
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Realty');
 
+        $realty = $repository->getRealtyByUUID($uuid);
 
-        return $this->render('realty/single.html.twig');
+        dump("uuid", $realty);       die();
+
+        // check for "edit" access: calls all voters
+
+        if (!$this->isGranted('edit', $realty)) {
+
+            return $this->render('realty/singleView.html.twig');
+        }
+
+        return $this->render('realty/singleEdit.html.twig');
     }
 
     /**

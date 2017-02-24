@@ -42,6 +42,22 @@ class RealtyRepository extends EntityRepository {
        
         return $query->getResult();
     }
+    
+    public function getRealtyByUUID($uuid) {
+        
+     //   dump($name, $region);
+           
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT r, a  FROM AppBundle\Entity\Realty r "
+                        . "JOIN r.agent a WHERE r.uuid = :uuid");
+                        
+        $query->setParameters(array(
+            'uuid' => $uuid,
+            
+        ));
+       
+        return $query->getResult();
+    }
 
 
 }
